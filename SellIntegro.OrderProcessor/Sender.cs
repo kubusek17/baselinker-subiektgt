@@ -9,21 +9,54 @@ namespace SellIntegro.OrderProcessor
 {
     class Sender
     {
-       
-        private bool Exists(int orderId)
+        InsERT.Subiekt Subiekt;
+        InsERT.GT Gt;
+        public Sender()
         {
-            return false;
+            Gt = new InsERT.GT();
+            Gt.Produkt = InsERT.ProduktEnum.gtaProduktSubiekt;
+            Gt.Serwer = "(local)\\INSERTGT";
+            Gt.Baza = "test";
+            Gt.Operator = "Kowalski Jan";
+            Gt.OperatorHaslo = "";
+            Gt.Uzytkownik = "Szef";
+            Gt.UzytkownikHaslo = "";
+            Subiekt = (InsERT.Subiekt)Gt.Uruchom((int)UruchomDopasujEnum.gtaUruchomDopasuj, (int)UruchomEnum.gtaUruchomWTle);
         }
-        private void SenddOrderToERP(Order order)
+       
+        public void SendOrders(List<Order> orders)
         {
-            InsERT.GT gt = new InsERT.GT();
-            gt.Produkt = InsERT.ProduktEnum.gtaProduktSubiekt;
-            gt.Serwer = "(local)\\INSERTGT";
-            gt.Baza = "test";
-            gt.Operator = "Kowalski Jan";
-            gt.OperatorHaslo = "";
-            gt.Uzytkownik = "Szef";
-            gt.UzytkownikHaslo = "";
+            if (!OrderExists("\'1231331232121\'"))
+                SendOrderToErp(new Order());
+            foreach(Order order in orders)
+            {
+                if(!OrderExists("\'2\'"))
+                {
+                    SendOrderToErp(order);
+                }
+            }
+        }
+
+        private bool OrderExists(string id)
+        {
+            string criteria = "dok_NrPelnyOryg=" + id;
+            return Subiekt.SuDokumentyManager.OtworzKolekcje(criteria, "").Liczba>0;
+        }
+        public void SendOrderToErp(Order order)
+        {
+            if(!OrderExists("\'2\'"))
+            {
+               var document=Subiekt.SuDokumentyManager.DodajZK();
+                document.NumerOryginalny = "1231331232121";
+                Subiekt.KontrahenciManager.DodajKontrahentaJednorazowego();
+                document.Pozycje.
+                document.KontrahentId = 1;
+                document.Zapisz();
+                document.Zamknij();
+            }
+         
+            
+
         }
     }
 }

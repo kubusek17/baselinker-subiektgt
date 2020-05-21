@@ -8,6 +8,7 @@ namespace SellIntegro.OrderProcessor
 {
     class Order
     {
+        public string Id;
         private List<Product> Positions;
     }
 }
