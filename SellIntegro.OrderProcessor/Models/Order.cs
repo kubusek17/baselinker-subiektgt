@@ -8,8 +8,6 @@ namespace SellIntegro.OrderProcessor.Models
     {
         [JsonProperty("order_id")]
         public int Id { get; set; }
-        [JsonProperty("products")]
-        public List<Product> Products { get; set; }
         [JsonProperty("date_confirmed")]
         public DateTime DateConfirmed { get; set; }
         [JsonProperty("delivery_fullname")]

@@ -49,7 +49,6 @@
     <Compile Include="Helpers\UnixDateTimeConverter.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="OrderProcessor.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Sender.cs" />

@@ -26,6 +26,7 @@ namespace SellIntegro.OrderProcessor
             {
                 SendOrderToErp(order);
             }
+
         }
 
         private bool OrderExists(string id)
@@ -36,13 +37,16 @@ namespace SellIntegro.OrderProcessor
         private void SendOrderToErp(Order order)
         {
             var document = Subiekt.SuDokumentyManager.DodajZK();
+
             document.NumerOryginalny = order.Id;
+
             var customer = GetOrCreateCustomer(order.DeliveryFullName);
-
             document.KontrahentId = customer.Identyfikator;
-            document.Zapisz();
 
+            document.Zapisz();
             document.Zamknij();
+
+            
         }
 
         private Kontrahent GetOrCreateCustomer(string symbol)
